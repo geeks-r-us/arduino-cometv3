@@ -1,4 +1,4 @@
-#include "LCD.h"
+#include "lcd.h"
 
 void setup()
 {

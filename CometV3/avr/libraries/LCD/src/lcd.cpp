@@ -13,7 +13,7 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <stdlib.h>
-#include "LCD.h"
+#include "lcd.h"
 
 #define NUM_DIGITS 4
 
