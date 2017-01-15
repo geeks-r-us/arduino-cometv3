@@ -40,7 +40,7 @@
 #define PHASE_A     (INPUT_PIN & 1<<ENCODER_A)
 #define PHASE_B     (INPUT_PIN & 1<<ENCODER_B)
 
-#define REPEAT_MASK     INPUT_ALL       // repeat: key1, key2
+#define REPEAT_MASK     ((1 << KEY_CLOCK) | (1 << KEY_MENU) | (1 << KEY_OK))   // repeat: all keys
 #define REPEAT_START    30            // after N scans
 #define REPEAT_NEXT     9             // every M scans
 

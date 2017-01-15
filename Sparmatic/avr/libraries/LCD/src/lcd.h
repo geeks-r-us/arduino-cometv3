@@ -13,7 +13,8 @@ typedef enum {
 	LCD_BATTERY	     =  256,
 	LCD_LOCK		 =  512,
 	LCD_DP			 = 1024,	// colon?
-	LCD_HOURS		 = 2048
+	LCD_HOURS		 = 2048,
+    LCD_ALL          = 4095 
 } LCD_SYMBOLS;
 
 #define LCD_SYM_ALL (2 * LCD_HOURS - 1)

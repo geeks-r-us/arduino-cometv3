@@ -274,37 +274,37 @@ void LCD::displayNumber(int16_t num, int8_t width)
 /// 
 void LCD::init(void)
 {
-LCDCRB = (1<<LCDCS)|(0<<LCD2B)|(1<<LCDMUX1)|(1<<LCDMUX0)|(1<<LCDPM2)|(1<<LCDPM1)|(1<<LCDPM0);
-/*
-      (1<<LCDCS)                            // Das LCD wird im asynchronen Modus (LCDCS-Bit=1)
-                                               mit der Frequenz des Quarzes TOSC1 = 32.768Hz als LCD Clock betrieben.
-      |(0<<LCD2B)                           // 1/3 bias is used
-      |(1<<LCDMUX1)|(1<<LCDMUX0)            // 1/4 Duty; COM0:3;
-      |(1<<LCDPM2)|(1<<LCDPM1)|(1<<LCDPM0); // SEG0:24
-*/
+	LCDCRB = (1<<LCDCS)|(0<<LCD2B)|(1<<LCDMUX1)|(1<<LCDMUX0)|(1<<LCDPM2)|(1<<LCDPM1)|(1<<LCDPM0);
+	/*
+		(1<<LCDCS)                            // Das LCD wird im asynchronen Modus (LCDCS-Bit=1)
+												mit der Frequenz des Quarzes TOSC1 = 32.768Hz als LCD Clock betrieben.
+		|(0<<LCD2B)                           // 1/3 bias is used
+		|(1<<LCDMUX1)|(1<<LCDMUX0)            // 1/4 Duty; COM0:3;
+		|(1<<LCDPM2)|(1<<LCDPM1)|(1<<LCDPM0); // SEG0:24
+	*/
 
-LCDFRR = (0<<LCDPS2)|(0<<LCDPS1)|(0<<LCDPS0)|(0<<LCDCD2)|(0<<LCDCD1)|(1<<LCDCD0);
-/*
-      (0<<LCDPS2)|(0<<LCDPS1)|(0<<LCDPS0)    // N = 16
-      |(0<<LCDCD2)|(0<<LCDCD1)|(1<<LCDCD0);  // D = 2
-      // ergo f(frame) = 128Hz
-      eventuell D=1, N=64 (LCDCD0 = 0) LCDPS0=1 für 64 Hz, ausprobieren
-*/
+	LCDFRR = (0<<LCDPS2)|(0<<LCDPS1)|(0<<LCDPS0)|(0<<LCDCD2)|(0<<LCDCD1)|(1<<LCDCD0);
+	/*
+		(0<<LCDPS2)|(0<<LCDPS1)|(0<<LCDPS0)    // N = 16
+		|(0<<LCDCD2)|(0<<LCDCD1)|(1<<LCDCD0);  // D = 2
+		// ergo f(frame) = 128Hz
+		eventuell D=1, N=64 (LCDCD0 = 0) LCDPS0=1 für 64 Hz, ausprobieren
+	*/
 
-LCDCCR = (1<<LCDDC2)|(0<<LCDDC1)|(0<<LCDDC0)|(/*config.lcd_contrast*/ 10 << LCDCC0);
-/*
-      (1<<LCDDC2)|(0<<LCDDC1)|(0<<LCDDC0)   // 575 µs
-      // 3,1V
-      |(config.lcd_contrast << LCDCC0);     // Set the initial LCD contrast level
-*/
+	LCDCCR = (1<<LCDDC2)|(0<<LCDDC1)|(0<<LCDDC0)|(/*config.lcd_contrast*/ 10 << LCDCC0);
+	/*
+		(1<<LCDDC2)|(0<<LCDDC1)|(0<<LCDDC0)   // 575 µs
+		// 3,1V
+		|(config.lcd_contrast << LCDCC0);     // Set the initial LCD contrast level
+	*/
 
-LCDCRA = (1<<LCDEN)|(1<<LCDAB)|(0<<LCDIE)|(0<<LCDBL);
-/*
-      (1<<LCDEN)    // Enable LCD
-      |(1<<LCDAB)   // Low Power Waveform
-      |(0<<LCDIE)   // disable Interrupt
-      |(0<<LCDBL);  // No Blanking
-*/
+	LCDCRA = (1<<LCDEN)|(1<<LCDAB)|(0<<LCDIE)|(0<<LCDBL);
+	/*
+		(1<<LCDEN)    // Enable LCD
+		|(1<<LCDAB)   // Low Power Waveform
+		|(0<<LCDIE)   // disable Interrupt
+		|(0<<LCDBL);  // No Blanking
+	*/
 }
 
 
