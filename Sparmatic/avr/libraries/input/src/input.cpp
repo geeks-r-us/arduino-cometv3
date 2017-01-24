@@ -29,7 +29,7 @@ void input::periodicScan()
     static uint8_t ct0, ct1, rpt;
     uint8_t i;
     int8_t newValue, diff;
-
+#ifdef ENCODER
     newValue = 0;
     if (PHASE_A)
         newValue = 3;
@@ -41,7 +41,8 @@ void input::periodicScan()
         _last = newValue;             // store new as next last
         _enc_delta += (diff & 2) - 1; // bit 1 = direction (+/-)
     }
-
+#endif
+	
     i = key_state ^ ~INPUT_PIN;   // key changed ?
     ct0 = ~(ct0 & i);           // reset or count ct0
     ct1 = ct0 ^ (ct1 & i);      // reset or count ct1
@@ -115,7 +116,7 @@ uint8_t input::get_key_long(uint8_t key_mask)
 {
     return get_key_press(get_key_rpt(key_mask));
 }
-
+#ifdef ENCODER
 /// \brief .
 ///
 ///
@@ -134,7 +135,7 @@ int8_t input::get_key_increment(void)
 
     return 0;
 }
-
+#endif 
 /// \brief .
 ///
 ///
@@ -146,7 +147,7 @@ void input::init(void)
 
     EIMSK |= (1 << PCIE1); //PC-INT 8..15
     PCMSK1 |= INPUT_ALL;   // Enable all switches PC-INT
-
+#ifdef ENCODER 
     int8_t newValue = 0;
     if (PHASE_A)
         newValue = 3;
@@ -154,8 +155,10 @@ void input::init(void)
         newValue ^= 1; // convert gray to binary
     _last = newValue;   // power on state
     _enc_delta = 0;
+#endif
 }
 
+#ifdef ENCODER
 int8_t input::encoderRead() // read two step encoders
 {
     int8_t val;
@@ -166,3 +169,4 @@ int8_t input::encoderRead() // read two step encoders
     sei();
     return val >> 1;
 }
+#endif

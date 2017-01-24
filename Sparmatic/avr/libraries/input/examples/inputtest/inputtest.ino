@@ -13,14 +13,20 @@ void setup()
 
 void loop()
 {
-
     uint8_t keys = Input.get_key_press((1 << KEY_OK) | (1 << KEY_MENU) | (1 << KEY_CLOCK) );
 
     
     LCD.displaySymbols(keys, keys);
 	
-
+#ifdef ENCODER
     value += Input.encoderRead();
+#else
+	keys = Input.get_key_press((1 << KEY_PLUS) | (1 << KEY_MINUS));
+	if( keys & (1 << KEY_PLUS))
+		value++;
+	if (keys & (1 << KEY_MINUS))
+		value--;
+#endif
     LCD.displayNumber(value, 4);
 }
 
