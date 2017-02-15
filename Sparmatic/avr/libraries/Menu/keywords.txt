@@ -1,0 +1,26 @@
+#######################################
+# Syntax Coloring Map For Menu
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Menu	KEYWORD1
+
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+handleMenu	KEYWORD2 
+nextEntry	KEYWORD2
+prevEntry	KEYWORD2
+execEntry	KEYWORD2
+displayEntry	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
