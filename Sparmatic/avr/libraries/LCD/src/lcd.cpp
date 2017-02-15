@@ -42,7 +42,8 @@ static const uint16_t Font[] PROGMEM = {
 			0x00C1,		//=
 			0x0900,		//>
 			0x1421,		//?
-			0x2D3F,		//@
+			0x00E3,		//@ degree
+//			0x2D3F,		//@
 			0x00F7,		//A
 			0x128F,		//B
 			0x0039,		//C
@@ -298,7 +299,7 @@ void LCD::init(void)
 		|(config.lcd_contrast << LCDCC0);     // Set the initial LCD contrast level
 	*/
 
-	LCDCRA = (1<<LCDEN)|(1<<LCDAB)|(0<<LCDIE)|(0<<LCDBL);
+	LCDCRA = (1<<LCDEN)|(1<<LCDAB)|(1<<LCDIE)|(0<<LCDBL);
 	/*
 		(1<<LCDEN)    // Enable LCD
 		|(1<<LCDAB)   // Low Power Waveform
