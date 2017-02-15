@@ -27,23 +27,28 @@ void motor::init(){
 }
 
 inline void motor::open(){
-	// enable motor control pins
-	MOTOR_DDR |= (1 << MOTOR_PIN_L) | (1 << MOTOR_PIN_R);
-	
+	// disable close
+	MOTOR_DDR &= ~(1 << MOTOR_PIN_R);
+	MOTOR_PORT &= ~(1 << MOTOR_PIN_R);
+
+	// enable open
+	MOTOR_DDR |= (1 << MOTOR_PIN_L);
 	MOTOR_PORT |= (1 << MOTOR_PIN_L);
 }
 
 inline void motor::close(){
-	// enable motor control pins
-	MOTOR_DDR |= (1 << MOTOR_PIN_L) | (1 << MOTOR_PIN_R);
-	
+	// disable open
+	MOTOR_DDR &= ~(1 << MOTOR_PIN_L);
+	MOTOR_PORT &= ~(1 << MOTOR_PIN_L);
+
+	// enable close
+	MOTOR_DDR |= (1 << MOTOR_PIN_R);
 	MOTOR_PORT |= (1 << MOTOR_PIN_R);
 }
 
 inline void motor::stop(){
 	// disable motor control pins
 	MOTOR_DDR &= ~(1 << MOTOR_PIN_L) | (1 << MOTOR_PIN_R);
-	
 	MOTOR_PORT &= ~((1 << MOTOR_PIN_L) | (1 << MOTOR_PIN_R));
 }
 
@@ -51,7 +56,7 @@ void motor::move(enum MotorDir direction)
 {
 	m_direction = direction;
 	stop();
-	
+
 	switch(direction)
 	{
 		case CLOSE:
