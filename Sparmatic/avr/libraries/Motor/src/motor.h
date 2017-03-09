@@ -3,32 +3,41 @@
 
 #include <stdint.h>
 
-#define MOTOR_SENSE_PIN PE1
-
 enum MotorDir {
-	CLOSE = -1,
-	STOP = 0,
-	OPEN = 1
+	CLOSE = 0,
+	STOP = 1,
+	OPEN = 2,
+	FULLOPEN = 4,
+	FULLCLOSE = 8
 };
 
 
 class motor {
-public:    
-    motor();
-    void init();
-	void move(enum MotorDir direction);
+public:
+	volatile bool running = false;
+	volatile int16_t position = 10000;				// ?? high value to avoid start up problems, should be private
+
+	void init();
+	void motorISR();
+	void timer();
+	void moveTo(uint8_t pos);
+
 private:
+	volatile int16_t target = 0;
+	volatile int16_t valveClosedPosition = 1000;	// ?? MOTOR_MAX_CLOSE
+	volatile int timerDelay = 3;					// delay for motor stop detection (MOTOR_TIMER_DELAY)
+
 	void open();
 	void close();
 	void stop();
-	
-    
-private:
-	enum MotorDir m_direction;
+	uint16_t getCurrent();
+	void endPositionReached();
+
+//private:
+public:
+	enum MotorDir m_direction = STOP;
 };
 
 static motor Motor;
-#define getMotorPosition(x) ((const volatile int16_t)MotorPosition)
 
 #endif /* MOTOR_H_ */
-

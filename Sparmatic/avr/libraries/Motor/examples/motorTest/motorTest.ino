@@ -6,21 +6,38 @@ void setup()
 {
 	LCD.init();
 	Input.init();
-	Motor.init();	
+	Motor.init();
 }
 
 void loop()
 {
-    int8_t value = Input.encoderRead();
+    int8_t enc = Input.get_key_increment();
+
+	if (enc == 1)
+	{ // Open
+		Motor.moveTo(0);
+	}
+
+	if (enc == -1)
+	{ // Close
+		Motor.moveTo(255);
+	}
+
+	if (Motor.running)
+		LCD.displayNumber(Motor.position, 4);
+
+/*
 	LCD.displayNumber(value, 4);
 	Motor.move((enum MotorDir)value);
 	delay(1000);
+*/
 }
 
 ISR(LCD_vect)
 {
     Input.periodicScan();
-    
+
+ 	Motor.timer();   
 }
 
 ISR(PCINT1_vect)
@@ -32,14 +49,5 @@ ISR(PCINT1_vect)
 #define PCINT0_PORTIN PINE
 ISR(PCINT0_vect)
 {
-	static unsigned char lastState = 0; // init to defaults
-	unsigned char newState = PCINT0_PORTIN;
-	unsigned char changed = newState ^ lastState;
-	lastState = newState;
-	
-	// motor step
-	if(changed & (1 << MOTOR_SENSE_PIN))
-	{
-		Motor.step();
-	}
+	Motor.motorISR();
 }
